@@ -9,7 +9,7 @@ pipeline {
         stage('Restore Packages') {
             steps{
                 echo '---- Restore Packages ----'
-                dir(${env.PROJECT_PATH}){
+                dir("${env.PROJECT_PATH}"){
                     sh 'pwd'                
                     sh 'dotnet restore'
                 }
