@@ -43,7 +43,7 @@ pipeline {
         stage('Upload folder to S3 Bucket'){
             steps{
                 echo '---- Upload folder to S3 Bucket'
-                dir("${env.PUBLISH_PATH"){
+                dir("${env.PUBLISH_PATH}"){
                     sh 'aws s3 cp publish s3://why-not-bucket/publish --recursive'
                 }
             }
