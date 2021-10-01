@@ -3,7 +3,10 @@ pipeline {
 
     stages {
         stage('Restore Packages') {
-            sh 'pwd'
+            steps{
+                echo '---- Restore Packages ----'
+                sh 'pwd'
+            }
         }
         // stage('Clean'){
         //     sh 'dotnet clean WebApiApplication.csproj --configuration Release'
