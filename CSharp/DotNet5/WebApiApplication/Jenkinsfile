@@ -6,6 +6,7 @@ pipeline {
             steps{
                 echo '---- Restore Packages ----'
                 sh 'pwd'
+                sh 'dotnet restore'
             }
         }
         // stage('Clean'){
