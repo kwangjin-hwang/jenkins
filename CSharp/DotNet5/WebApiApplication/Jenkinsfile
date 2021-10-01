@@ -1,0 +1,18 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Restore Packages') {
+            sh 'dotnet restore WebApiApplication.csproj'
+        }
+        stage('Clean'){
+            sh 'dotnet clean WebApiApplication.csproj --configuration Release'
+        }
+        stage('Build'){
+            sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
+        }
+        stage('Publish'){
+            sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'
+        }
+    }
+}
