@@ -24,9 +24,11 @@ pipeline {
             }
         }
         stage('Build'){
-            echo '---- Build ----'
-            dir("${env.PROJECT_PATH}"){
-            sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
+            steps{
+                echo '---- Build ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
+                }
             }
         }
         // stage('Publish'){
