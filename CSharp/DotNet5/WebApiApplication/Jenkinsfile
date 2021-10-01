@@ -5,8 +5,10 @@ pipeline {
         stage('Restore Packages') {
             steps{
                 echo '---- Restore Packages ----'
-                sh 'pwd'
-                sh 'dotnet restore'
+                dir('CSharp/DotNet5/WebApiApplication'){
+                    sh 'pwd'
+                }
+                // sh 'dotnet restore'
             }
         }
         // stage('Clean'){
