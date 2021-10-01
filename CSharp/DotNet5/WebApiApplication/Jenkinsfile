@@ -15,12 +15,20 @@ pipeline {
                 }
             }
         }
-        // stage('Clean'){
-        //     sh 'dotnet clean WebApiApplication.csproj --configuration Release'
-        // }
-        // stage('Build'){
-        //     sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
-        // }
+        stage('Clean'){
+            steps{
+                echo '---- Clean ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet clean WebApiApplication.csproj --configuration Release'
+                }
+            }
+        }
+        stage('Build'){
+            echo '---- Build ----'
+            dir("${env.PROJECT_PATH}"){
+            sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
+            }
+        }
         // stage('Publish'){
         //     sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'
         // }
