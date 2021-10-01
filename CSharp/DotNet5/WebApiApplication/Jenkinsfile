@@ -31,8 +31,13 @@ pipeline {
                 }
             }
         }
-        // stage('Publish'){
-        //     sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'
-        // }
+        stage('Publish'){
+            steps{
+                echo '---- Publish ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'        
+                }
+            }
+        }
     }
 }
