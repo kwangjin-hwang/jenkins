@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Build'){
             steps{
-                echo '---- Build TEST ----'
+                echo '---- Build ----'
                 dir("${env.PROJECT_PATH}"){
                     sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
                 }
@@ -40,5 +40,21 @@ pipeline {
                 }
             }
         }
+        stage('Test of Docker Build') {
+            steps {
+                echo '----- Docker Build ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'docker build .'
+                }
+            }
+        }
+        // stage('Upload folder to S3 Bucket'){
+        //     steps{
+        //         echo '---- Upload folder to S3 Bucket'
+        //         dir("${env.PUBLISH_PATH}"){
+        //             sh 'aws s3 cp publish s3://why-not-bucket/publish --recursive'
+        //         }
+        //     }
+        // }
     }
 }
