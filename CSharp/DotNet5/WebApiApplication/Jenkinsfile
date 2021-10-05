@@ -45,7 +45,7 @@ pipeline {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
-                    sh "docker build --tag registry.cnakj.shop/kwangjin/test-docker-pipeline:${env.VERSION} ."
+                    sh "docker build -t registry.cnakj.shop/kwangjin/test-docker-pipeline:${env.VERSION} ."
                 }
             }
         }
