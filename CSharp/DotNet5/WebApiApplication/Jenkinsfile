@@ -41,11 +41,19 @@ pipeline {
                 }
             }
         }
-        stage('Test of Docker Build') {
+        stage('Docker Build') {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
                     sh "docker build --tag test-docker-pipeline:${env.VERSION} ."
+                }
+            }
+        }
+        stage('push Docker Image to Harbor') {
+            steps {
+                echo '---- Push to Harbor ----'
+                dir("${env.PROJECT_PATH}") {
+                    sh "docker push test-docker-pipeline:${env.VERSION}"
                 }
             }
         }
