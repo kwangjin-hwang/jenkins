@@ -42,34 +42,32 @@ pipeline {
             }
         }
 
-        stage('Build Image') {
-            steps {
-                echo '---- Build Image ----'
+        stage('Docker Login') {
+            steps{
+                echo '---- Docker Login ----'
                 dir("${env.PROJECT_PATH}") {
-                    script {
-                        def customImage = docker.build("registry.cnakj.shop/library/test-image:${env.VERSION}")
-                        customImage.push()
-                    }
+                    sh 'docker login registry.cnakj.shop -u admin -p Harbor12345'
                 }
             }
         }
 
-        // stage('Docker Build') {
-        //     steps {
-        //         echo '----- Docker Build ----'
-        //         dir("${env.PROJECT_PATH}"){
-        //             sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
-        //         }
-        //     }
-        // }
-        // stage('push Docker Image to Harbor') {
-        //     steps {
-        //         echo '---- Push to Harbor ----'
-        //         dir("${env.PROJECT_PATH}") {
-        //             sh "docker push registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION}"
-        //         }
-        //     }
-        // }
+        stage('Docker Build') {
+            steps {
+                echo '----- Docker Build ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
+                }
+            }
+        }
+        
+        stage('push Docker Image to Harbor') {
+            steps {
+                echo '---- Push to Harbor ----'
+                dir("${env.PROJECT_PATH}") {
+                    sh "docker push registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION}"
+                }
+            }
+        }
 
 
 
