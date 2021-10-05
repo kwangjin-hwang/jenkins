@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Build'){
             steps{
-                echo '---- Build ----'
+                echo '---- Build TEST ----'
                 dir("${env.PROJECT_PATH}"){
                     sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
                 }
