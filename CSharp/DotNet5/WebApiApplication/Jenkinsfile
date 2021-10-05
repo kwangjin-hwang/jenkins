@@ -41,22 +41,38 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build') {
+
+        stage('Build Image') {
             steps {
-                echo '----- Docker Build ----'
-                dir("${env.PROJECT_PATH}"){
-                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
-                }
-            }
-        }
-        stage('push Docker Image to Harbor') {
-            steps {
-                echo '---- Push to Harbor ----'
+                echo '---- Build Image ----'
                 dir("${env.PROJECT_PATH}") {
-                    sh "docker push registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION}"
+                    script {
+                        def customImage = docker.build("registry.cnakj.shop/library/test-image:${env.VERSION}")
+                        customImage.push()
+                    }
                 }
             }
         }
+
+        // stage('Docker Build') {
+        //     steps {
+        //         echo '----- Docker Build ----'
+        //         dir("${env.PROJECT_PATH}"){
+        //             sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
+        //         }
+        //     }
+        // }
+        // stage('push Docker Image to Harbor') {
+        //     steps {
+        //         echo '---- Push to Harbor ----'
+        //         dir("${env.PROJECT_PATH}") {
+        //             sh "docker push registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION}"
+        //         }
+        //     }
+        // }
+
+
+
         // stage('Upload folder to S3 Bucket'){
         //     steps{
         //         echo '---- Upload folder to S3 Bucket'
