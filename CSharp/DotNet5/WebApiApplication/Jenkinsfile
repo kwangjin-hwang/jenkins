@@ -1,66 +1,44 @@
-pipeline{
-    agent {
-        docker { image 'node:14-alpine'}
+pipeline {
+    agent any 
+
+    environment {
+        PROJECT_PATH = 'CSharp/DotNet5/WebApiApplication'
+        PUBLISH_PATH = 'CSharp/DotNet5/WebApiApplication/bin/Release/net5.0'
     }
 
     stages {
-        stage('TEST') {
-            steps {
-                sh 'node --version'
+        stage('Restore Packages') {
+            steps{
+                echo '---- Restore Packages ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'pwd'                
+                    sh 'dotnet restore'
+                }
+            }
+        }
+        stage('Clean'){
+            steps{
+                echo '---- Clean ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet clean WebApiApplication.csproj --configuration Release'
+                }
+            }
+        }
+        stage('Build'){
+            steps{
+                echo '---- Build ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
+                }
+            }
+        }
+        stage('Publish'){
+            steps{
+                echo '---- Publish ----'
+                dir("${env.PROJECT_PATH}"){
+                    sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'        
+                }
             }
         }
     }
 }
-
-// pipeline {
-//     agent any 
-
-//     environment {
-//         PROJECT_PATH = 'CSharp/DotNet5/WebApiApplication'
-//         PUBLISH_PATH = 'CSharp/DotNet5/WebApiApplication/bin/Release/net5.0'
-//     }
-
-//     stages {
-//         stage('Restore Packages') {
-//             steps{
-//                 echo '---- Restore Packages ----'
-//                 dir("${env.PROJECT_PATH}"){
-//                     sh 'pwd'                
-//                     sh 'dotnet restore'
-//                 }
-//             }
-//         }
-//         stage('Clean'){
-//             steps{
-//                 echo '---- Clean ----'
-//                 dir("${env.PROJECT_PATH}"){
-//                     sh 'dotnet clean WebApiApplication.csproj --configuration Release'
-//                 }
-//             }
-//         }
-//         stage('Build'){
-//             steps{
-//                 echo '---- Build ----'
-//                 dir("${env.PROJECT_PATH}"){
-//                     sh 'dotnet build WebApiApplication.csproj --configuration Release --no-restore'
-//                 }
-//             }
-//         }
-//         stage('Publish'){
-//             steps{
-//                 echo '---- Publish ----'
-//                 dir("${env.PROJECT_PATH}"){
-//                     sh 'dotnet publish WebApiApplication.csproj --configuration Release --no-restore'        
-//                 }
-//             }
-//         }
-//         stage('Upload folder to S3 Bucket'){
-//             steps{
-//                 echo '---- Upload folder to S3 Bucket'
-//                 dir("${env.PUBLISH_PATH}"){
-//                     sh 'aws s3 cp publish s3://why-not-bucket/publish --recursive'
-//                 }
-//             }
-//         }
-//     }
-// }
