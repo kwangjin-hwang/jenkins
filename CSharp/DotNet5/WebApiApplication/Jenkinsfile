@@ -45,7 +45,7 @@ pipeline {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
-                    sh "docker build -t registry.cnakj.shop/kwangjin/test-docker-pipeline:${env.VERSION} ."
+                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 echo '---- Push to Harbor ----'
                 dir("${env.PROJECT_PATH}") {
-                    sh "docker push registry.cnakj.shop/kwangjin/test-docker-pipeline:${env.VERSION}"
+                    sh "docker push registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION}"
                 }
             }
         }
