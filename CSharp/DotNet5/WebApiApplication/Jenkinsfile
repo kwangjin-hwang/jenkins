@@ -4,6 +4,7 @@ pipeline {
     environment {
         PROJECT_PATH = 'CSharp/DotNet5/WebApiApplication'
         PUBLISH_PATH = 'CSharp/DotNet5/WebApiApplication/bin/Release/net5.0'
+        VERSION = '0.0.1'
     }
 
     stages {
@@ -44,7 +45,7 @@ pipeline {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
-                    sh 'docker build .'
+                    sh "docker build --tag test-docker-pipeline:${env.VERSION} ."
                 }
             }
         }
