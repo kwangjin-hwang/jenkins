@@ -47,7 +47,7 @@ pipeline {
                 echo '---- Docker Login ----'
                 dir("${env.PROJECT_PATH}") {
                     sh 'docker logout'
-                    sh 'docker login registry.cnakj.shop -u admin -p Harbor12345'
+                    sh 'cat DockerPassword.txt | docker login registry.cnakj.shop -u admin --password-stdin'
                 }
             }
         }
