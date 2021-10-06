@@ -56,7 +56,7 @@ pipeline {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
-                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} /docker/Dockerfile"
+                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} -f /docker/Dockerfile ."
                 }
             }
         }
