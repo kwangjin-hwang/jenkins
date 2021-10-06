@@ -47,7 +47,7 @@ pipeline {
                 echo '---- Docker Login ----'
                 dir("${env.PROJECT_PATH}") {
                     sh 'docker logout'
-                    sh 'cat DockerPassword.txt | docker login registry.cnakj.shop -u admin --password-stdin'
+                    sh 'cat /docker/DockerPassword.txt | docker login registry.cnakj.shop -u admin --password-stdin'
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 echo '----- Docker Build ----'
                 dir("${env.PROJECT_PATH}"){
-                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} ."
+                    sh "docker build -t registry.cnakj.shop/library/test-docker-pipeline:${env.VERSION} /docker/Dockerfile"
                 }
             }
         }
